@@ -2,27 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: http: https:;" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Redmine Desktop Task Manager</title>
+    <title>Redmine Task Manager</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body data-theme="dark">
     <div class="app">
-      <aside class="sidebar">
-        <div class="brand">
-          <h2>Redmine Manager</h2>
-          <p class="meta">Desktop task and time tracking</p>
+      <header class="app-header">
+        <div class="top-menu">
+          <button id="menuToggle" class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <nav id="menuPanel" class="menu-panel">
+            <button id="viewTasksBtn" class="nav-btn active" type="button">Tasks</button>
+            <button id="viewDetailBtn" class="nav-btn" type="button" disabled>Issue Detail</button>
+            <button id="viewLogsBtn" class="nav-btn" type="button">Logs</button>
+            <button id="viewSettingsBtn" class="nav-btn" type="button">Settings</button>
+          </nav>
         </div>
-        <nav class="view-nav">
-          <button id="viewTasksBtn" class="nav-btn active" type="button" data-view-target="tasks">Tasks</button>
-          <button id="viewSettingsBtn" class="nav-btn" type="button" data-view-target="settings">Settings</button>
-        </nav>
-      </aside>
+      </header>
 
       <main class="main">
         <section id="tasksView" class="view active">
-          <section class="card timer">
+          <section class="block timer">
             <div class="toolbar">
               <div>
                 <h2>Active Timer</h2>
@@ -51,7 +56,7 @@
             <div id="timerStatus" class="status"></div>
           </section>
 
-          <section class="card">
+          <section class="block">
             <div class="toolbar">
               <div>
                 <h2>Issues</h2>
@@ -62,10 +67,34 @@
             <div id="globalStatus" class="status"></div>
             <div id="issuesList" class="issue-list"></div>
           </section>
+        </section>
 
-          <section class="card">
+        <section id="detailView" class="view">
+          <section class="block">
+            <div class="toolbar">
+              <div>
+                <h2 id="detailTitle">No issue selected</h2>
+                <div id="selectedIssueLabel" class="meta">Choose an issue from Tasks.</div>
+              </div>
+            </div>
+            <div id="detailStatus" class="status"></div>
+            <div id="detailFacts" class="facts-grid"></div>
+            <div class="field entries-spaced">
+              <label>Description</label>
+              <div id="detailDescription" class="description-box meta">No description available.</div>
+            </div>
+            <div class="field">
+              <label>Attachments</label>
+              <div id="detailAttachments" class="attachments-wrap meta">No attachments.</div>
+            </div>
+            <div class="field">
+              <label>Extra Data</label>
+              <div id="detailExtra" class="description-box meta">No extra data available.</div>
+            </div>
+          </section>
+
+          <section class="block">
             <h2>Manual Time Entry</h2>
-            <div id="selectedIssueLabel" class="meta">No issue selected</div>
             <div class="row">
               <div class="field field-140 field-row">
                 <label for="manualIssueId">Issue ID</label>
@@ -112,8 +141,8 @@
         </section>
 
         <section id="settingsView" class="view">
-          <section class="card settings-card">
-            <h2>Redmine Setup</h2>
+          <section class="block settings-block">
+            <h2>Settings</h2>
             <form id="configForm">
               <div class="field">
                 <label for="baseUrl">Base URL</label>
@@ -147,6 +176,73 @@
               <button type="submit">Save Settings</button>
               <div id="configStatus" class="status"></div>
             </form>
+          </section>
+        </section>
+
+        <section id="logsView" class="view">
+          <section class="block">
+            <div class="toolbar">
+              <div>
+                <h2>Application Logs</h2>
+                <div id="logsPath" class="meta">Log file path: -</div>
+              </div>
+              <div class="row">
+                <button id="logsRefreshBtn" class="secondary">Refresh</button>
+                <button id="logsClearBtn" class="danger">Clear Logs</button>
+                <button id="logsExportBtn">Export</button>
+              </div>
+            </div>
+
+            <div class="logs-filters">
+              <div class="field field-row">
+                <label for="logLevelFilter">Level</label>
+                <select id="logLevelFilter">
+                  <option value="">All</option>
+                  <option value="error">Error</option>
+                  <option value="info">Info</option>
+                </select>
+              </div>
+              <div class="field field-row">
+                <label for="logSourceFilter">Source</label>
+                <select id="logSourceFilter">
+                  <option value="">All</option>
+                </select>
+              </div>
+              <div class="field field-row">
+                <label for="logErrorTypeFilter">Error Type</label>
+                <select id="logErrorTypeFilter">
+                  <option value="">All</option>
+                </select>
+              </div>
+              <div class="field field-row">
+                <label for="logDateFrom">From</label>
+                <input id="logDateFrom" type="date" />
+              </div>
+              <div class="field field-row">
+                <label for="logDateTo">To</label>
+                <input id="logDateTo" type="date" />
+              </div>
+              <div class="field field-row logs-search">
+                <label for="logSearchFilter">Search</label>
+                <input id="logSearchFilter" placeholder="message/source/details" />
+              </div>
+            </div>
+
+            <div id="logsStatus" class="status"></div>
+            <div class="entries entries-spaced logs-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Level</th>
+                    <th>Source</th>
+                    <th>Error Type</th>
+                    <th>Message</th>
+                  </tr>
+                </thead>
+                <tbody id="logsBody"></tbody>
+              </table>
+            </div>
           </section>
         </section>
       </main>
