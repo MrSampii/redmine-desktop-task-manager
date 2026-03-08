@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "redmine-desktop-task-manager",
   "version": "1.0.0",
   "description": "Redmine manager and time tracker",
@@ -24,6 +24,7 @@
     "dev": "electron ."
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "electron": "23.1.3"
   }
 }

@@ -142,3 +142,18 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Project-specific test artifacts
+test-artifacts/
+playwright-report/
+test-results/
+
+# Playwright local runtime data
+.playwright/.auth/
+.playwright/.cache/
+
+# Optional local env/user files
+*.local
+
+# Claude local skills/config
+.claude/
