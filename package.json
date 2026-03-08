@@ -1,0 +1,29 @@
+﻿{
+  "name": "redmine-desktop-task-manager",
+  "version": "1.0.0",
+  "description": "Redmine manager and time tracker",
+  "keywords": [
+    "redmine",
+    "electron",
+    "desktop"
+  ],
+  "homepage": "https://github.com/MrSampii/redmine-desktop-task-manager#readme",
+  "bugs": {
+    "url": "https://github.com/MrSampii/redmine-desktop-task-manager/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrSampii/redmine-desktop-task-manager.git"
+  },
+  "license": "ISC",
+  "author": "Adrian Sampedro Menchen",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron ."
+  },
+  "devDependencies": {
+    "electron": "23.1.3"
+  }
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Redmine Desktop Task Manager</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-theme="dark">
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <h2>Redmine Manager</h2>
+          <p class="meta">Desktop task and time tracking</p>
+        </div>
+        <nav class="view-nav">
+          <button id="viewTasksBtn" class="nav-btn active" type="button" data-view-target="tasks">Tasks</button>
+          <button id="viewSettingsBtn" class="nav-btn" type="button" data-view-target="settings">Settings</button>
+        </nav>
+      </aside>
+
+      <main class="main">
+        <section id="tasksView" class="view active">
+          <section class="card timer">
+            <div class="toolbar">
+              <div>
+                <h2>Active Timer</h2>
+                <div id="timerIssue" class="meta">No timer running</div>
+              </div>
+              <div id="timerElapsed" class="timer-elapsed">00:00:00</div>
+            </div>
+            <div class="field">
+              <label for="timerComment">Comment for tracked entry</label>
+              <textarea id="timerComment" placeholder="Work summary"></textarea>
+            </div>
+            <div class="row">
+              <div class="field field-160 field-row">
+                <label for="timerSpentOn">Date</label>
+                <input id="timerSpentOn" type="date" />
+              </div>
+              <div class="field field-220 field-row">
+                <label for="timerActivityId">Activity ID (optional)</label>
+                <input id="timerActivityId" type="number" placeholder="default from settings" />
+              </div>
+            </div>
+            <div class="row">
+              <button id="stopAndLogBtn" class="success" disabled>Stop and Log</button>
+              <button id="discardTimerBtn" class="danger" disabled>Discard Timer</button>
+            </div>
+            <div id="timerStatus" class="status"></div>
+          </section>
+
+          <section class="card">
+            <div class="toolbar">
+              <div>
+                <h2>Issues</h2>
+                <div id="issuesCount" class="meta">0 loaded</div>
+              </div>
+              <button id="refreshBtn" class="secondary">Refresh</button>
+            </div>
+            <div id="globalStatus" class="status"></div>
+            <div id="issuesList" class="issue-list"></div>
+          </section>
+
+          <section class="card">
+            <h2>Manual Time Entry</h2>
+            <div id="selectedIssueLabel" class="meta">No issue selected</div>
+            <div class="row">
+              <div class="field field-140 field-row">
+                <label for="manualIssueId">Issue ID</label>
+                <input id="manualIssueId" type="number" placeholder="Issue id" />
+              </div>
+              <div class="field field-140 field-row">
+                <label for="manualHours">Hours</label>
+                <input id="manualHours" type="number" step="0.01" min="0.01" placeholder="1.25" />
+              </div>
+              <div class="field field-170 field-row">
+                <label for="manualSpentOn">Date</label>
+                <input id="manualSpentOn" type="date" />
+              </div>
+              <div class="field field-220 field-row">
+                <label for="manualActivityId">Activity ID (optional)</label>
+                <input id="manualActivityId" type="number" placeholder="default from settings" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="manualComment">Comment</label>
+              <textarea id="manualComment" placeholder="Describe the work"></textarea>
+            </div>
+            <div class="row">
+              <button id="logManualBtn">Log Time</button>
+              <button id="loadEntriesBtn" class="secondary">Load Entries for Issue</button>
+            </div>
+            <div id="manualStatus" class="status"></div>
+
+            <div class="entries entries-spaced">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Hours</th>
+                    <th>Activity</th>
+                    <th>Comments</th>
+                    <th>User</th>
+                  </tr>
+                </thead>
+                <tbody id="entriesBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section id="settingsView" class="view">
+          <section class="card settings-card">
+            <h2>Redmine Setup</h2>
+            <form id="configForm">
+              <div class="field">
+                <label for="baseUrl">Base URL</label>
+                <input id="baseUrl" placeholder="https://redmine.example.com" required />
+              </div>
+              <div class="field">
+                <label for="apiKey">API Key</label>
+                <input id="apiKey" type="password" placeholder="Your Redmine API key" required />
+              </div>
+              <div class="field">
+                <label for="userId">User ID (optional)</label>
+                <input id="userId" type="number" placeholder="Current user id" />
+              </div>
+              <div class="field">
+                <label for="activityId">Default Activity ID (optional)</label>
+                <input id="activityId" type="number" placeholder="e.g. 9" />
+              </div>
+              <div class="field">
+                <label for="issueQuery">Issue Query</label>
+                <input id="issueQuery" placeholder="assigned_to_id=me&status_id=open&sort=updated_on:desc" />
+                <small>Used as `/issues.json?limit=100&...`</small>
+              </div>
+              <div class="field">
+                <label for="themeMode">Theme</label>
+                <select id="themeMode">
+                  <option value="dark">Dark</option>
+                  <option value="light">Light</option>
+                  <option value="pink">Pink</option>
+                </select>
+              </div>
+              <button type="submit">Save Settings</button>
+              <div id="configStatus" class="status"></div>
+            </form>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="./renderer.js"></script>
+  </body>
+</html>
