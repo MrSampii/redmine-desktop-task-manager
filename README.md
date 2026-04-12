@@ -94,7 +94,7 @@ Redmine Desktop Task Manager brings the following into a single UI:
 
 ## Tech Stack
 - Electron
-- JavaScript (CommonJS)
+- JavaScript
 - HTML/CSS
 - Playwright (test automation)
 
@@ -146,9 +146,13 @@ From the **Logs** view, you can:
 ## Testing
 
 ### Available Scripts
+- Start the app:
+  ```bash
+  npm start
+  ```
 - Full Electron E2E suite:
   ```bash
-  node scripts/e2e-electron-full-test.js
+  npm run test:e2e
   ```
 - Playwright TodoMVC demo scenarios:
   ```bash
@@ -210,11 +214,27 @@ No extra code is required:
 
 ```text
 .
-├─ index.html
-├─ styles.css
-├─ renderer.js
-├─ preload.js
-├─ main.js
+├─ src/
+│  ├─ main/
+│  │  ├─ config/
+│  │  ├─ ipc/
+│  │  ├─ security/
+│  │  ├─ services/
+│  │  └─ windows/
+│  ├─ preload/
+│  │  └─ index.js
+│  ├─ renderer/
+│  │  ├─ constants/
+│  │  ├─ dom/
+│  │  ├─ features/
+│  │  ├─ services/
+│  │  ├─ state/
+│  │  ├─ styles/
+│  │  └─ utils/
+│  └─ shared/
+│     ├─ constants/
+│     ├─ ipc/
+│     └─ utils/
 ├─ scripts/
 │  ├─ e2e-electron-full-test.js
 │  └─ playwright-todomvc-scenarios.js
@@ -222,6 +242,7 @@ No extra code is required:
 │  ├─ electron-e2e-report.json
 │  ├─ electron-e2e-screenshots/
 │  └─ screenshots/
+├─ package.json
 └─ README.md
 ```
 

@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: http: https:;" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Redmine Task Manager</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body data-theme="dark">
     <div class="app">
@@ -248,6 +248,22 @@
       </main>
     </div>
 
-    <script src="./renderer.js"></script>
+    <script src="./constants/app.js"></script>
+    <script src="./state/app-state.js"></script>
+    <script src="./dom/elements.js"></script>
+    <script src="./services/api.js"></script>
+    <script src="./utils/common.js"></script>
+    <script src="./utils/status.js"></script>
+    <script src="./utils/logger.js"></script>
+    <script src="./utils/description.js"></script>
+    <script src="./features/navigation/navigation-controller.js"></script>
+    <script src="./features/config/config-controller.js"></script>
+    <script src="./features/issues/issues-controller.js"></script>
+    <script src="./features/issue-detail/issue-detail-controller.js"></script>
+    <script src="./features/timer/timer-controller.js"></script>
+    <script src="./features/time-entries/time-entries-controller.js"></script>
+    <script src="./features/logs/logs-controller.js"></script>
+    <script src="./app.js"></script>
+    <script src="./index.js"></script>
   </body>
 </html>

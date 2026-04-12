@@ -75,7 +75,7 @@ async function clickNav(win, buttonSelector) {
 async function capture(win, index, status) {
   ensureDir(SHOTS_DIR);
   const file = path.join(SHOTS_DIR, `${String(index).padStart(2, '0')}-${status}.png`);
-  await win.screenshot({ path: file, fullPage: true });
+  await win.screenshot({ path: file, fullPage: true, timeout: 5000 });
   return file;
 }
 
@@ -394,13 +394,21 @@ async function run() {
     for (let i = 0; i < scenarios.length; i += 1) {
       let status = 'pass';
       let error = null;
+      let screenshot = null;
+      console.log(`Running scenario ${i + 1}/${scenarios.length}: ${scenarios[i].name}`);
       try {
         await scenarios[i].run();
       } catch (err) {
         status = 'fail';
         error = err?.message || String(err);
       }
-      const screenshot = await capture(win, i + 1, status);
+      try {
+        screenshot = await capture(win, i + 1, status);
+      } catch (captureError) {
+        status = 'fail';
+        const captureMessage = `Screenshot failed: ${captureError?.message || String(captureError)}`;
+        error = error ? `${error} | ${captureMessage}` : captureMessage;
+      }
       results.push({
         scenario: scenarios[i].name,
         expected: 'pass',

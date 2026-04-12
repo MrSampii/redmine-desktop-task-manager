@@ -18,10 +18,11 @@
   "license": "ISC",
   "author": "Adrian Sampedro Menchen",
   "type": "commonjs",
-  "main": "main.js",
+  "main": "src/main/index.js",
   "scripts": {
     "start": "electron .",
-    "dev": "electron ."
+    "dev": "electron .",
+    "test:e2e": "node scripts/e2e-electron-full-test.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",

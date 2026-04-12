@@ -1,6 +1,6 @@
-﻿const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('redmineApi', {
+contextBridge.exposeInMainWorld('redmineApi', Object.freeze({
   getConfig: () => ipcRenderer.invoke('config:get'),
   saveConfig: (config) => ipcRenderer.invoke('config:save', config),
   fetchIssues: () => ipcRenderer.invoke('issues:fetch'),
@@ -16,4 +16,4 @@ contextBridge.exposeInMainWorld('redmineApi', {
   exportLogs: (filters) => ipcRenderer.invoke('logs:export', filters),
   clearLogs: () => ipcRenderer.invoke('logs:clear'),
   openExternal: (url) => ipcRenderer.invoke('external:open', url),
-});
+}));
