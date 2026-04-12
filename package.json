@@ -21,11 +21,13 @@
   "main": "src/main/index.js",
   "scripts": {
     "start": "electron .",
-    "dev": "electron .",
-    "test:e2e": "node scripts/e2e-electron-full-test.js"
+    "test:e2e": "node scripts/e2e-electron-full-test.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
-    "electron": "41.2.0"
+    "electron": "41.2.0",
+    "eslint": "^10.2.0"
   }
 }

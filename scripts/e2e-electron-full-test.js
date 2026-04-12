@@ -131,7 +131,9 @@ function startMockServer() {
       if (req.method === 'GET' && /^\/issues\/\d+\.json$/.test(p)) {
         const issueId = Number(p.match(/\d+/)[0]);
         const base = state.issues.find((x) => x.id === issueId);
-        if (!base) return json(res, 404, { error: 'Issue not found' });
+        if (!base) {
+          return json(res, 404, { error: 'Issue not found' });
+        }
         return json(res, 200, {
           issue: {
             id: base.id,
@@ -194,7 +196,9 @@ function startMockServer() {
           issue_id: issueId,
         };
         state.posted.push(created);
-        if (!state.entries[issueId]) state.entries[issueId] = [];
+        if (!state.entries[issueId]) {
+          state.entries[issueId] = [];
+        }
         state.entries[issueId].unshift(created);
         return json(res, 201, { time_entry: created });
       }
@@ -422,8 +426,12 @@ async function run() {
     app = null;
   } finally {
     try {
-      if (app) await app.close();
-      if (bootstrapApp) await bootstrapApp.close();
+      if (app) {
+        await app.close();
+      }
+      if (bootstrapApp) {
+        await bootstrapApp.close();
+      }
     } catch {}
 
     if (userDataPath) {
