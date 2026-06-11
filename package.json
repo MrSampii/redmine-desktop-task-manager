@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
-    "electron": "41.2.0",
+    "electron": "42.4.0",
     "eslint": "^10.4.1"
   }
 }
